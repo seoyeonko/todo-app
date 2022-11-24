@@ -7,7 +7,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const todoRouter = require('./routes/todo');
-app.use('/', todoRouter);
+app.use('/api', todoRouter); // 기본주소: localhost:PORT/api
 
 app.get('*', (req, res) => {
   res.send('404 Error!!!');

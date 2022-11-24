@@ -3,9 +3,9 @@ const { Todo } = require('../models');
 const { Op } = require('sequelize');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send('메인 페이지');
-});
+// router.get('/', (req, res) => {
+//   res.send('메인 페이지');
+// });
 
 // GET /todos - show all todos (READ)
 router.get('/todos', async (req, res) => {
