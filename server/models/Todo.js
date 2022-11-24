@@ -14,11 +14,11 @@ const Todo = function (Sequelize, DataTypes) {
         primaryKey: true,
         autoIncrement: true,
       },
-      todo: {
+      title: {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
-      completed: {
+      done: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
