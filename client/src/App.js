@@ -3,6 +3,7 @@ import axios from 'axios';
 import AddTodo from './components/AddTodo';
 import Todo from './components/Todo';
 import './App.css';
+import { API_BASE_URL } from './app-config'; // defulat export가 아니였으므로 {} 즁괄호로 감싸주어야 함
 
 function App() {
   const [todoItems, setTodoItems] = useState([]);
@@ -10,7 +11,7 @@ function App() {
   useEffect(() => {
     console.log('첫 렌더링 완료');
     const getTodos = async () => {
-      let res = await axios.get('http://localhost:8000/api/todos');
+      let res = await axios.get(`${API_BASE_URL}/api/todos`);
       setTodoItems(res.data);
     };
     getTodos();
@@ -30,21 +31,21 @@ function App() {
     // // todoItems.push(item);
     // // setTodoItems(todoItems);
 
-    const res = await axios.post('http://localhost:8000/api/todo', item);
+    const res = await axios.post(`${API_BASE_URL}/api/todo`, item);
     // 기존 아이템: ...todoItems
     // 새로운 아이템: res.data ( {id: 15, title: 'bb', done: false} )
     setTodoItems([...todoItems, res.data]);
   };
 
   const deleteItem = async (item) => {
-    await axios.delete(`http://localhost:8000/api/todo/${item.id}`);
+    await axios.delete(`${API_BASE_URL}/api/todo/${item.id}`);
     const newTodoItems = todoItems.filter((e) => e.id !== item.id);
     setTodoItems(newTodoItems);
   };
 
   const updateItem = async (item) => {
     console.log(item);
-    await axios.patch(`http://localhost:8000/api/todo/${item.id}`, item);
+    await axios.patch(`${API_BASE_URL}/api/todo/${item.id}`, item);
   };
 
   return (
