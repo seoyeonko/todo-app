@@ -13,6 +13,8 @@ const hostname = window && window.location && window.location.hostname;
 
 if (hostname === 'localhost') {
   backendHost = 'http://localhost:8000';
+} else {
+  backendHost = 'http://101.101.218.48:8000';
 }
 
 export const API_BASE_URL = `${backendHost}`;
