@@ -7,7 +7,7 @@ const router = express.Router();
 //   res.send('메인 페이지');
 // });
 
-// GET /todos - show all todos (READ)
+// GET /api/todos - show all todos (READ)
 router.get('/todos', async (req, res) => {
   try {
     let todos = await Todo.findAll();
@@ -17,47 +17,50 @@ router.get('/todos', async (req, res) => {
   }
 });
 
-// GET /todo/:todoId - show a specific todo (READ ONE)
-router.get('/todo/:todoId', async (req, res) => {
-  try {
-    let todo = await Todo.findOne({
-      where: {
-        id: { [Op.eq]: req.params.todoId },
-      },
-      // raw: true,
-    });
-    // 조회 결과 없음
-    if (todo === null) {
-      return res.send(false);
-    }
-    res.send(todo);
-  } catch (err) {
-    res.send(err);
-  }
-});
+// GET /api/todo/:todoId - show a specific todo (READ ONE)
+// router.get('/todo/:todoId', async (req, res) => {
+//   try {
+//     let todo = await Todo.findOne({
+//       where: {
+//         id: { [Op.eq]: req.params.todoId },
+//       },
+//       // raw: true,
+//     });
+//     // 조회 결과 없음
+//     if (todo === null) {
+//       return res.send(false);
+//     }
+//     res.send(todo);
+//   } catch (err) {
+//     res.send(err);
+//   }
+// });
 
-// POST /todo - create a new todo (CREATE)
+// POST /api/todo - create a new todo (CREATE)
 router.post('/todo', async (req, res) => {
+  console.log('>>>>', req.body);
   try {
     let newTodo = await Todo.create({
-      todo: req.body.todo,
-      completed: req.body.completed,
+      title: req.body.title,
+      done: false, // todoItem 추가시 false가 기본 값
     });
+    console.log(newTodo);
     res.send(newTodo);
   } catch (err) {
     res.send(err);
   }
 });
 
-// PATCH /todo/:todoId - edit a specific todo (UPDATE)
+// PATCH /api/todo/:todoId - edit a specific todo (UPDATE)
 router.patch('/todo/:todoId', async (req, res) => {
+  console.log(req.body);
   try {
     // 배열 구조 분해
     // [isUpdated] = [ 0 ] or [ 1 ]
     let [idUpdated] = await Todo.update(
       {
-        todo: req.body.todo,
-        completed: req.body.completed,
+        title: req.body.title,
+        done: req.body.done,
       },
       {
         where: {
@@ -78,7 +81,7 @@ router.patch('/todo/:todoId', async (req, res) => {
   }
 });
 
-// DELETE /todo/:todoId - remove a specific todo (DELETE)
+// DELETE /api/todo/:todoId - remove a specific todo (DELETE)
 router.delete('/todo/:todoId', async (req, res) => {
   try {
     let isDeleted = await Todo.destroy({
