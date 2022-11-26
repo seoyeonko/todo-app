@@ -4,7 +4,7 @@ const Todo = (props) => {
   // const { id, title, done } = props.item;
   const [todoItem, setTodoItem] = useState(props.item);
   const [readOnly, setReadOnly] = useState(true);
-  const { deleteItem } = props;
+  const { deleteItem, updateItem } = props;
 
   const deleteEventHandler = () => {
     deleteItem(todoItem);
@@ -22,6 +22,7 @@ const Todo = (props) => {
     if (e.key === 'Enter') {
       // TODO: 가짜 데이터에서는 단순히 true로 변경하지만 API 연결시 update api 불러와 서버에 바뀐 아이템 저장할 예정
       setReadOnly(true);
+      updateItem(todoItem); // 엔터 누르면 저장
     }
   };
 
@@ -37,12 +38,10 @@ const Todo = (props) => {
   };
 
   // checkbox 업데이트
-  const checkboxEventHandler = (e) => {
-    const { done, ...rest } = todoItem;
-    setTodoItem({
-      done: !todoItem.done,
-      ...rest,
-    });
+  const checkboxEventHandler = () => {
+    todoItem.done = !todoItem.done;
+    setTodoItem(todoItem);
+    updateItem(todoItem); // 체크 박스 변경시 저장
   };
 
   // useEffect(() => {
