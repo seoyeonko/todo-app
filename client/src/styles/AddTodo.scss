@@ -1,0 +1,16 @@
+@import './utils.scss';
+
+.AddTodo {
+  width: 100%;
+  padding: 36px 24px;
+  display: flex;
+
+  input {
+    @include input($color-blue-600);
+    margin-right: 12px;
+  }
+
+  button {
+    @include button($color-blue-600, $color-white-50);
+  }
+}

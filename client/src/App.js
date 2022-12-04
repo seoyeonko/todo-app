@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddTodo from './components/AddTodo';
 import Todo from './components/Todo';
-import './App.css';
+// import './App.css';
+import './styles/App.scss';
 import { API_BASE_URL } from './app-config'; // defulat export가 아니였으므로 {} 즁괄호로 감싸주어야 함
 
 function App() {
@@ -50,21 +51,28 @@ function App() {
 
   return (
     <div className="App">
+      <header>✌🏻 My Todo App</header>
       <AddTodo addItem={addItem} />
       {/* <Todo item={todoItems[0]} />
       <Todo item={todoItems[1]} />
       <Todo item={todoItems[2]} /> */}
 
-      {todoItems.map((item) => {
-        return (
-          <Todo
-            key={item.id}
-            item={item}
-            deleteItem={deleteItem}
-            updateItem={updateItem}
-          />
-        );
-      })}
+      <div className="left-todos">🚀 {todoItems.length} Todos</div>
+
+      {todoItems.length > 0 ? (
+        todoItems.map((item) => {
+          return (
+            <Todo
+              key={item.id}
+              item={item}
+              deleteItem={deleteItem}
+              updateItem={updateItem}
+            />
+          );
+        })
+      ) : (
+        <p className="empty-todos">Todo를 추가해주세요 🔥</p>
+      )}
     </div>
   );
 }
